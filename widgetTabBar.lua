@@ -1,7 +1,7 @@
 -- widgetTabBar.lua
 -- Description: TabBar to use when working with widgets.
 --
--- Version: 1.01
+-- Version: 1.02
 --
 -- Copyright (C)2011 lano78, creativefusion.se All Rights Reserved.
 -- 
@@ -33,11 +33,10 @@
 -- ToDo;
 -- Fix so it uses vector tabBg and highlight as backgrounds and custom tabIcons centered on tabs.
 -- Fix so it can use tabIcons size 30x30px for iphone 3-3G, 60x60px for iphone4 (retina)
--- Vector tabBg/highlight size = 64x44px radius = 2-4px (think apple use 2px).
+-- Vector tabBg/highlight size = 64x44px
 --
 -- How to use:
 -- Same way as tabBar sample by Ansca.
--- If no background is specified, then it uses the vector tabBg.
 
 module(..., package.seeall)
 
@@ -49,11 +48,11 @@ function newWidgetTabBar(params)
 		
 		local tabBarImg;
 		local tab;
-		local tabBg; -- for Vector tabBg, not in use at the moment.
+		local tabBg; -- for Vector tabBg
 		local tabIconDefault;
 		local tabIconOver;
 		local highlight;
-		local highlightBg; -- for Vector highlight, not in use at the moment.
+		local highlightBg; -- for Vector highlight
 		local defaultGroup;
 		local highlightGroup;
 		local background = params.background;
@@ -68,7 +67,7 @@ function newWidgetTabBar(params)
 		-- Set up the tabBar background with the rects
 		if background then
 			-- if using an image as tabBarBg.
-					tabBarImg = display.newImageRect ( tabBar, "tabBarBg.png", screenWidth, 49)
+					tabBarImg = display.newImageRect ( tabBar, defines.TABBAR_IMG_BG , screenWidth, 49)
 					tabBarImg:setReferencePoint(display.TopLeftReferencePoint)
 					tabBarImg.x = 0;
 					tabBarImg.y = screenHeight - tabBarImg.height;
@@ -119,7 +118,7 @@ function newWidgetTabBar(params)
 				table.insert(default,"tabIcon".. i ..".png");
 			end
 		end
-					
+		
 		if not over then
 			over = {}
 				
@@ -128,12 +127,10 @@ function newWidgetTabBar(params)
 				table.insert(over,"tabIcon".. i .. "_over.png");
 			end
 		end
-
 		
 		for i = 1, #tabs do
 		tab = widget.newButton { 
-			label = tabs[i], 
-			labelColor = { 255, 255, 255 }, 
+			label = tabs[i],  
 			size = 11, 
 			font = "Helvetica", 
 			onRelease = onRelease, 
@@ -154,7 +151,8 @@ function newWidgetTabBar(params)
 		tab:setReferencePoint(display.CenterReferencePoint);	
 		tab.x = tab.width*(i-1) + tabSpacing*i + tab.width*0.5;
 		tab.y = screenHeight - tab.height*0.5;
-		tab.label.y = 15;
+		tab.label.y = 14;
+		tab.labelColor = {168, 168, 168}
 		tab.id = i;
 		end
 		
@@ -166,13 +164,13 @@ function newWidgetTabBar(params)
 		if tabBar.highlight then 
 			display.remove(highlight);
 			highlight = nil;
+			
 			print(" --> highlight removed, tab:" .. target.id .." is pressed");
 		end
         
 		-- highlight tab.
 		highlight = widget.newButton { 
 			label = tabs[target.id], 
-			labelColor = { 255, 255, 255 }, 
 			size = 11, 
 			font = "Helvetica", 
 			onRelease = onRelease, 
@@ -188,6 +186,7 @@ function newWidgetTabBar(params)
 		highlight.x = target.x;
 		highlight.y = target.y ;
 		highlight.label.y = tab.label.y;
+		highlight.labelColor = { 255, 255, 255 }
 		
 		tabBar:insert(highlight.view);
 		

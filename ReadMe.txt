@@ -3,7 +3,8 @@ tabBar for CoronaSDK widgets
 This version is based on tabBar sample by Ansca.
 Build Version 2011.617 (2011.8.2)
 -------------------------------------------
-
+This project is no longer supported as Ansca have added the tabBar widget to it's SDK. This code is free to use.
+-------------------------------------------
 Known errors;
 none at this point.
 
